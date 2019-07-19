@@ -12,7 +12,7 @@ abalone-dpacia-sklearn = {editable = true,path = "."}
 pandas = "*"
 numpy = "*"
 sklearn = "*"
-matpltlib = "*"
+matplotlib = "*"
 
 [requires]
 python_version = "3.7"
