@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.metrics import accuracy_score, mean_squared_error, classification_report, confusion_matrix
 import matplotlib.pyplot as plt
 from collections import Counter
 
@@ -46,12 +47,18 @@ class Abalone():
         y = abadata.rings.values
         del abadata["rings"]
         XTrain, XTest, yTrain, yTest = train_test_split(abadata, y, random_state=0, train_size=0.2)
-        model = DecisionTreeRegressor(max_depth=4)
+        model = DecisionTreeRegressor( )
 
         model.fit(XTrain, yTrain)
         # apply the model to the test and training data
         predicted_test_y = model.predict(XTest)
         predicted_train_y = model.predict(XTrain)
+
+        # print classification report, accuracy_score, and mean_squared_error
+
+        print(classification_report(yTest, predicted_test_y))
+        print("accuracy score: %.3f " % accuracy_score(yTest, predicted_test_y))
+        print("mean squared error: %.3f " % mean_squared_error(yTest, predicted_test_y))
 
         # count the occurrences of each point
         c = Counter(zip(yTest, predicted_test_y))
@@ -64,8 +71,8 @@ class Abalone():
 
         plt.xlabel('True number of rings')
         plt.ylabel('Predicted number of rings')
-        plt.title('Decision Tree Regressor(max_depth=4)  Test Data')
-        plt.legend()
+        plt.title('Decision Tree Regressor - Test Data')
+
         plt.show()
 
 
