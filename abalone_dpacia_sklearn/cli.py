@@ -2,16 +2,14 @@
 
 """Console script for abalone_dpacia_sklearn."""
 import sys
-import click
+from .abalone_dpacia_sklearn import Abalone
 
 
-@click.command()
 def main(args=None):
     """Console script for abalone_dpacia_sklearn."""
-    click.echo("Replace this message by putting your code into "
-               "abalone_dpacia_sklearn.cli.main")
-    click.echo("See click documentation at http://click.pocoo.org/")
-    return 0
+    aba = Abalone()
+    abalone_dataset = aba.load()
+    aba.train(abalone_dataset)
 
 
 if __name__ == "__main__":
