@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import sklearn as sk
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 import matplotlib.pyplot as plt
@@ -27,7 +26,12 @@ class Abalone():
         """
         column_names = ["sex", "length", "diameter", "height", "whole_weight", "shucked_weight",
                         "viscera_weight", "shell_weight", "rings"]
-        abadata = pd.read_csv("../data/abalone.data", names=column_names)
+        abadata = pd.read_csv("./data/abalone.data", names=column_names)
+
+        # convert sex into factor, remove sex column.
+        for label in "MFI":
+            abadata[label] = abadata["sex"] == label
+        del abadata["sex"]
 
         return abadata
 
@@ -38,6 +42,8 @@ class Abalone():
         :param abadata:
         :return:
         """
+        y = abadata.rings.values
+        del abadata["rings"]
         XTrain, XTest, yTrain, yTest = train_test_split(abadata, y, random_state=0, train_size=0.2)
         model = DecisionTreeRegressor()
 
@@ -48,14 +54,11 @@ class Abalone():
 
         # Plot the results
         plt.figure()
-        plt.scatter(X, y, s=20, edgecolor="black",
-                    c="darkorange", label="data")
-        plt.plot(X_test, y_1, color="cornflowerblue",
-                 label="max_depth=2", linewidth=2)
-        plt.plot(X_test, y_2, color="yellowgreen", label="max_depth=5", linewidth=2)
-        plt.xlabel("data")
-        plt.ylabel("target")
-        plt.title("Decision Tree Regression")
+        plt.scatter(yTest, predicted_test_y, color="red", s=2)
+
+        plt.xlabel('True number of rings')
+        plt.ylabel('Predicted number of rings')
+        plt.title('Performance on Test Data')
         plt.legend()
         plt.show()
 
