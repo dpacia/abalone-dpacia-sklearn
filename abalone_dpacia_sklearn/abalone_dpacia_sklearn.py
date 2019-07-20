@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 import matplotlib.pyplot as plt
+from collections import Counter
 
 
 class Abalone():
@@ -45,20 +46,25 @@ class Abalone():
         y = abadata.rings.values
         del abadata["rings"]
         XTrain, XTest, yTrain, yTest = train_test_split(abadata, y, random_state=0, train_size=0.2)
-        model = DecisionTreeRegressor()
+        model = DecisionTreeRegressor(max_depth=4)
 
         model.fit(XTrain, yTrain)
         # apply the model to the test and training data
         predicted_test_y = model.predict(XTest)
         predicted_train_y = model.predict(XTrain)
 
+        # count the occurrences of each point
+        c = Counter(zip(yTest, predicted_test_y))
+        # create a list of the sizes, here multiplied by 3 for scale
+        pt_size_lst = [3 * c[(xx, yy)] for xx, yy in zip(yTest, predicted_test_y)]
+
         # Plot the results
         plt.figure()
-        plt.scatter(yTest, predicted_test_y, color="red", s=2)
+        plt.scatter(yTest, predicted_test_y, color="darkred", s=pt_size_lst)
 
         plt.xlabel('True number of rings')
         plt.ylabel('Predicted number of rings')
-        plt.title('Performance on Test Data')
+        plt.title('Decision Tree Regressor(max_depth=4)  Test Data')
         plt.legend()
         plt.show()
 
