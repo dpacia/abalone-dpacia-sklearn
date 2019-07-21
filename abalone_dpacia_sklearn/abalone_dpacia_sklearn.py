@@ -81,7 +81,7 @@ class Abalone:
         plt.ylabel('Predicted number of rings')
         plt.title('Decision Tree Regressor - Test Data')
 
-        # plt.show()
+        return plt
 
     def svr(self, xtrain, ytrain, xtest, ytest):
         """ Implements support vector regression with linear, polynomial and radial basis
@@ -102,30 +102,20 @@ class Abalone:
         svr_lin.fit(xtrain,ytrain)
         svr_poly.fit(xtrain,ytrain)
 
-
-        # #############################################################################
-        # Look at the results
-        lw = 2
-
-        svr_models = [svr_rbf, svr_lin]
+        svr_models = [svr_rbf, svr_lin, svr_poly]
         kernel_label = ['RBF', 'Linear', 'Polynomial']
         model_color = ['m', 'c', 'g']
 
-        fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(15, 10), sharey='all')
+        fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(10, 8), sharey='all')
         for ix, svr in enumerate(svr_models):
 
-            axes[ix].plot(ytest, svr.predict(xtest), color=model_color[ix], lw=lw,
-                          label='{} model'.format(kernel_label[ix]))
-            # axes[ix].scatter(X[svr.support_], y[svr.support_], facecolor="none",
-            #                  edgecolor=model_color[ix], s=50,
-            #                  label='{} support vectors'.format(kernel_label[ix]))
-            # axes[ix].scatter(X[np.setdiff1d(np.arange(len(X)), svr.support_)],
-            #                  y[np.setdiff1d(np.arange(len(X)), svr.support_)],
-            #                  facecolor="none", edgecolor="k", s=50,
-            #                  label='other training data')
+            axes[ix].scatter(ytest, svr.predict(xtest), color=model_color[ix],
+                             label='{} model'.format(kernel_label[ix]))
+
             axes[ix].legend(loc='upper center', bbox_to_anchor=(0.5, 1.1),
                             ncol=1, fancybox=True, shadow=True)
 
         fig.text(0.5, 0.04, 'Actual', ha='center', va='center')
         fig.text(0.06, 0.5, 'Predicted', ha='center', va='center', rotation='vertical')
         fig.suptitle("Support Vector Regression", fontsize=14)
+        return plt
