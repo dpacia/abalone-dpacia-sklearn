@@ -74,7 +74,7 @@ class Abalone:
         pt_size_lst = [3 * c[(xx, yy)] for xx, yy in zip(yTest, predicted_test_y)]
 
         # Plot the results
-        plt.figure()
+
         plt.scatter(yTest, predicted_test_y, color="darkred", s=pt_size_lst)
 
         plt.xlabel('True number of rings')
@@ -106,7 +106,7 @@ class Abalone:
         kernel_label = ['RBF', 'Linear', 'Polynomial']
         model_color = ['m', 'c', 'g']
 
-        fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(10, 8), sharey='all')
+        fig, axes = plt.subplots(nrows=1, ncols=3, sharey='all')
         for ix, svr in enumerate(svr_models):
 
             axes[ix].scatter(ytest, svr.predict(xtest), color=model_color[ix],
@@ -118,4 +118,4 @@ class Abalone:
         fig.text(0.5, 0.04, 'Actual', ha='center', va='center')
         fig.text(0.06, 0.5, 'Predicted', ha='center', va='center', rotation='vertical')
         fig.suptitle("Support Vector Regression", fontsize=14)
-        return plt
+        return fig
