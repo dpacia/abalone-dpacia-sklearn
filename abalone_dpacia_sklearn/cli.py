@@ -2,16 +2,23 @@
 
 """Console script for abalone_dpacia_sklearn."""
 import sys
-import click
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+from .abalone_dpacia_sklearn import Abalone
 
 
-@click.command()
 def main(args=None):
     """Console script for abalone_dpacia_sklearn."""
-    click.echo("Replace this message by putting your code into "
-               "abalone_dpacia_sklearn.cli.main")
-    click.echo("See click documentation at http://click.pocoo.org/")
-    return 0
+    aba = Abalone()
+    abalone_dataset = aba.load()
+    xtrain, xtest, ytrain, ytest = aba.split(abalone_dataset)
+
+    plt.figure()
+
+    plt.plot0 = aba.decisiontreeregressor(xtrain,xtest,ytrain,ytest)
+    plt.plot1 = aba.svr(xtrain,ytrain,xtest, ytest)
+
+    plt.show()
 
 
 if __name__ == "__main__":

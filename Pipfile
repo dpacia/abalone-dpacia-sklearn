@@ -11,7 +11,8 @@ pytest-cov = "*"
 abalone-dpacia-sklearn = {editable = true,path = "."}
 pandas = "*"
 numpy = "*"
-sklearn = "*"  
+sklearn = "*"
+matplotlib = "*"
 
 [requires]
 python_version = "3.7"

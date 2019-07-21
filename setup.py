@@ -11,12 +11,6 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['Click>=6.0', ]
-
-setup_requirements = [ ]
-
-test_requirements = [ ]
-
 setup(
     author="Dave Pacia",
     author_email='davepacia15@gmail.com',
@@ -37,16 +31,13 @@ setup(
             'abalone_dpacia_sklearn=abalone_dpacia_sklearn.cli:main',
         ],
     },
-    install_requires=requirements,
     license="GNU General Public License v3",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
     keywords='abalone_dpacia_sklearn',
     name='abalone_dpacia_sklearn',
     packages=find_packages(include=['abalone_dpacia_sklearn']),
-    setup_requires=setup_requirements,
     test_suite='tests',
-    tests_require=test_requirements,
     url='https://github.com/dpacia/abalone_dpacia_sklearn',
     version='0.1.0',
     zip_safe=False,
