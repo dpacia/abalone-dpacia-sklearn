@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from collections import Counter
 
 
-class Abalone():
+class Abalone:
     """
     Class to load Abalone dataset, train, test, and visualize results with the Scikit-Learn library.
 
@@ -50,18 +50,16 @@ class Abalone():
         XTrain, XTest, yTrain, yTest = train_test_split(abadata, y, random_state=0, train_size=0.2)
         return XTrain, XTest, yTrain, yTest
 
-
     def decisiontreeregressor(self, XTrain, XTest, yTrain, yTest):
         """Peforms Decision Tree Regression on the training dataset, generates
         quality metrics and scatter plot between predicted (test) and true values.
         """
 
-        model = DecisionTreeRegressor( )
+        model = DecisionTreeRegressor()
 
         model.fit(XTrain, yTrain)
         # apply the model to the test and training data
         predicted_test_y = model.predict(XTest)
-        predicted_train_y = model.predict(XTrain)
 
         # print classification report, accuracy_score, and mean_squared_error
 
@@ -83,9 +81,9 @@ class Abalone():
         plt.ylabel('Predicted number of rings')
         plt.title('Decision Tree Regressor - Test Data')
 
-        #plt.show()
+        # plt.show()
 
-    def SVR(self, XTrain, yTrain, XTest):
+    def svr(self, xtrain, ytrain, xtest, ytest):
         """ Implements support vector regression with linear, polynomial and radial basis
          function kernels.
 
@@ -95,38 +93,39 @@ class Abalone():
 
         # #############################################################################
         # Fit regression model
-        svr_rbf = SVR(kernel='rbf', C=100, gamma=0.1, epsilon=.1)
-        svr_lin = SVR(kernel='linear', C=100, gamma='auto')
-        svr_poly = SVR(kernel='poly', C=100, gamma='auto', degree=3, epsilon=.1,
+        svr_rbf = SVR(kernel='rbf', C=1, gamma=0.1, epsilon=.1)
+        svr_lin = SVR(kernel='linear', C=1, gamma='auto')
+        svr_poly = SVR(kernel='poly', C=1, gamma='auto', degree=3, epsilon=.1,
                        coef0=1)
+
+        svr_rbf.fit(xtrain,ytrain)
+        svr_lin.fit(xtrain,ytrain)
+        svr_poly.fit(xtrain,ytrain)
+
 
         # #############################################################################
         # Look at the results
         lw = 2
 
-        svrs = [svr_rbf, svr_lin, svr_poly]
+        svr_models = [svr_rbf, svr_lin]
         kernel_label = ['RBF', 'Linear', 'Polynomial']
         model_color = ['m', 'c', 'g']
 
         fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(15, 10), sharey='all')
-        for ix, svr in enumerate(svrs):
-            axes[ix].plot(X, svr.fit(XTrain, yTrain).predict(XTest), color=model_color[ix], lw=lw,
+        for ix, svr in enumerate(svr_models):
+
+            axes[ix].plot(ytest, svr.predict(xtest), color=model_color[ix], lw=lw,
                           label='{} model'.format(kernel_label[ix]))
-            axes[ix].scatter(X[svr.support_], y[svr.support_], facecolor="none",
-                             edgecolor=model_color[ix], s=50,
-                             label='{} support vectors'.format(kernel_label[ix]))
-            axes[ix].scatter(X[np.setdiff1d(np.arange(len(X)), svr.support_)],
-                             y[np.setdiff1d(np.arange(len(X)), svr.support_)],
-                             facecolor="none", edgecolor="k", s=50,
-                             label='other training data')
+            # axes[ix].scatter(X[svr.support_], y[svr.support_], facecolor="none",
+            #                  edgecolor=model_color[ix], s=50,
+            #                  label='{} support vectors'.format(kernel_label[ix]))
+            # axes[ix].scatter(X[np.setdiff1d(np.arange(len(X)), svr.support_)],
+            #                  y[np.setdiff1d(np.arange(len(X)), svr.support_)],
+            #                  facecolor="none", edgecolor="k", s=50,
+            #                  label='other training data')
             axes[ix].legend(loc='upper center', bbox_to_anchor=(0.5, 1.1),
                             ncol=1, fancybox=True, shadow=True)
 
-        fig.text(0.5, 0.04, 'data', ha='center', va='center')
-        fig.text(0.06, 0.5, 'target', ha='center', va='center', rotation='vertical')
+        fig.text(0.5, 0.04, 'Actual', ha='center', va='center')
+        fig.text(0.06, 0.5, 'Predicted', ha='center', va='center', rotation='vertical')
         fig.suptitle("Support Vector Regression", fontsize=14)
-
-
-
-
-
