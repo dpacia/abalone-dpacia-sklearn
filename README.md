@@ -5,7 +5,7 @@ The Abalone dataset and description can be found here:
 https://archive.ics.uci.edu/ml/datasets/Abalone
 
 
-** To Use:
+To Use:
 
 * Deploy the project.
 * The /data directory under the project root must contain the abalone.data file from the UCI Machine Learning Repository.
